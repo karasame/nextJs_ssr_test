@@ -1,19 +1,6 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { TopPage } from "./TopPage";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
-
-export const TopPageContainer = ({
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const [isShow, setIsShow] = useState(false);
-  const toggleIsShow = () => {
-    setIsShow(!isShow);
-  };
-  console.log(data);
-  return <TopPage {...{ isShow, toggleIsShow, json: data }} />;
-};
 
 type Data = { id: string; name: string; username: string }[];
 
@@ -23,3 +10,14 @@ export const getServerSideProps = (async () => {
   const data: Data = await res.json();
   return { props: { data } };
 }) satisfies GetServerSideProps<{ data: Data }>;
+
+export const TopPageContainer = ({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const [isShow, setIsShow] = useState(false);
+  const toggleIsShow = () => {
+    setIsShow(!isShow);
+  };
+  console.log(data);
+  return <TopPage {...{ isShow, toggleIsShow, data }} />;
+};
